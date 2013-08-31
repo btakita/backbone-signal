@@ -1,7 +1,7 @@
 backbone-signal
 ===============
 
-A rich Reactive Programming api on Backbone Models. It is composable, allows you to encapsulate loader logic,
+A rich Signal & Slots (Functional Reactive) api on Backbone Models. It is composable, allows you to encapsulate loader logic,
  and have fine grained control over listening to change events.
 
 # Usage
