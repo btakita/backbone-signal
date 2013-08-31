@@ -4,6 +4,8 @@ backbone-signal
 A rich Signal & Slots (Reactive) api on Backbone Models. It is composable, allows you to encapsulate loader logic,
  and have fine grained control over listening to change events.
 
+Currently being used in production in http://www.rundavoo.com
+
 # Usage
 
     // backbone-signal extends Backbone.Model
