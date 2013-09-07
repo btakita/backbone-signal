@@ -4,57 +4,48 @@ backbone-signal
 A rich Signal & Slots (Reactive Programming) api on Backbone Models. It is composable, allows you to encapsulate loader logic,
  and have fine grained control over listening to change events.
 
-Currently being used in production in http://www.rundavoo.com
-
 # Usage
 
     // backbone-signal extends Backbone.Model
     var app = new Backbone.Model();
 
-    // Create a signal on the app Model. The "slot" is the fb.login.status variable on the app Model.
-    var fbLoginStatusSignal = app.signal('fb.login.status').setLoader(function() {
-      FB.getLoginStatus(setFbLoginStatus, true);
-      FB.Event.subscribe("auth.statusChange", setFbLoginStatus);
-    }).setUnloader(function() {
-        unsubscribe();
-      });
-    function setFbLoginStatus(loginStatus) {
-      fbLoginStatusSignal.set(loginStatus);
-    }
-    function unsubscribe() {
-      FB.Event.unsubscribe("auth.statusChange", setFbLoginStatus);
-    }
-
-    // The callback argument to setLoader is called with currentUserSignal.load() and app.get("current_user") == null
-    var fbUserSignal = app.signal("fb_user").setLoader(function() {
-      fbLoginStatusSignal.load().get(currentUserSignal, function() {
-        if (loginStatus.status == "connected") {
-          FB.api("/me", function(user) {
-            if (user.error) {
-              fbUserSignal.set(false);
-            } else {
-              fbUserSignal.set(_.extend({
-                image: user ? "https://graph.facebook.com/" + user.id + "/picture" : null
-              }, user));
-            }
-          });
-        } else {
-         fbUserSignal.set(false);
-        }
-      });
+    var userSignal = app.signal("user");
+    userSignal.getTruthy(app, function(app, user) {
+      console.info("Hello " + user.name);
     });
 
-    // Loads the prints the fbUser.name when fbUser is truthy
-    // Note that if fbUserSignal.value() is truthy, the callback will be immediately invoked.
-    // The callback will also be invoked when fbUserSignal.value() changes with another truthy value.
-    fbUserSignal.load().getTruthy(function(app, fbUser) {
-      console.info(fbUser.name);
+    console.info("Let's see some friends");
+    userSignal.set({
+      name: "Jane"
     });
 
-    // Loads the prints the if fbUser is logged in when fbUserSignal.value() is defined (not null nor undefined)
-    fbUserSignal.load().getDefined(function(app, fbUser) {
-      console.info("Logged in?", !!(fbUser));
+    userSignal.getTruthy(app, function(app, user) {
+      console.info("Nice to see you");
     });
+
+    userSignal.set({
+      name: "Joe"
+    });
+
+    userSignal.unset();
+
+The console ouput is:
+
+    Let's see some friends
+    Hello Jane
+    Nice to see you
+    Hello Joe
+    Nice to see you
+
+We are calling getTruthy on the userSignal two times, one for "Hello " + user.name and one for "Nice to see you". The callback is invoked when the value is [Truthy](http://www.sitepoint.com/javascript-truthy-falsy/). So when userSignal.unset is called, the callbacks are not invoked.
+
+What is nice about having a dedicated signal object is that you can bind to it even when it's value is undefined, thereby avoiding order dependencies and simplyfying your logic.
+
+backbone-signal also utilizes Backbone's listenTo and listenToOnce methods, which make it easy to clean up by calling stopListening on the listener.
+
+backbone-signal is being used in [www.rundavoo.com](http://www.rundavoo.com) and has been fun to use, especially with [node.js](http://nodejs.org/) & [Browserify](http://browserify.org/). It's been a pleasure using a lightweight unframework to freely structure the dataflow logic of the site.
+
+#API
 
 ## Loading/Unloading
 
@@ -94,3 +85,7 @@ Currently being used in production in http://www.rundavoo.com
 * unbind - Unbinds the given object from the callback
 * loading
 * isLoading
+
+# Blog Posts
+
+http://briantakita.com/articles/backbone-signal-practical-reactive-programming-in-javascript/
