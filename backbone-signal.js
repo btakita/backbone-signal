@@ -1,6 +1,5 @@
 // Copyright by Brian Takita, 2013 Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 (function() {
-  var root = typeof window !== 'undefined' ? window : global;
   function Signal(target, attributeName) {
     this.target = target;
     this.attributeName = attributeName;
@@ -233,8 +232,9 @@
     }
   };
   _.extend(Backbone.Model.prototype, api);
-  var module = root.module;
-  if (module && module.exports) {
-    module.exports = api;
+  if (typeof module !== "undefined") {
+    if (module.exports) {
+      module.exports = api;
+    }
   }
 })();
