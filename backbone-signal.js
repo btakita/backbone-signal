@@ -150,8 +150,8 @@
       listenTo(this, listener, boundCb);
       return this;
     },
-    unbind: function(listener) {
-      listener.stopListening(this.target, this.attributeName && this.changeKey);
+    unbind: function(listener, cb) {
+      listener.stopListening(this.target, this.attributeName && this.changeKey, cb);
       return this;
     },
     loading: function(listener, cb) {
@@ -199,7 +199,7 @@
   function bindTruthyOnce(signal, listener, cb) {
     return function getTruthyOnceCb(model, value) {
       if (value) {
-        listener.stopListening(signal.target, signal.changeKey, getTruthyOnceCb);
+        signal.unbind(listener, getTruthyOnceCb);
         cb.apply(signal, arguments);
       }
     };
@@ -207,7 +207,7 @@
   function bindFalsyOnce(signal, listener, cb) {
     return function getFalsyOnceCb(model, value) {
       if (value) {
-        listener.stopListening(signal.target, signal.changeKey, getFalsyOnceCb);
+        signal.unbind(listener, getFalsyOnceCb);
         cb.apply(signal, arguments);
       }
     };
@@ -215,7 +215,7 @@
   function bindDefinedOnce(signal, listener, cb) {
     return function getDefinedOnceCb(model, value) {
       if (value !== undefined && value !== null) {
-        listener.stopListening(signal.target, signal.changeKey, getDefinedOnceCb);
+        signal.unbind(listener, getDefinedOnceCb);
         cb.apply(signal, arguments);
       }
     };
