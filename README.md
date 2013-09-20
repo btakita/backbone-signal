@@ -6,28 +6,30 @@ A rich Signal & Slots (Reactive Programming) api on Backbone Models. It is compo
 
 # Usage
 
-    // backbone-signal extends Backbone.Model
-    var app = new Backbone.Model();
+```javascript
+// backbone-signal extends Backbone.Model
+var app = new Backbone.Model();
 
-    var userSignal = app.signal("user");
-    userSignal.getTruthy(app, function(app, user) {
-      console.info("Hello " + user.name);
-    });
+var userSignal = app.signal("user");
+userSignal.getTruthy(app, function(app, user) {
+  console.info("Hello " + user.name);
+});
 
-    console.info("Let's see some friends");
-    userSignal.set({
-      name: "Jane"
-    });
+console.info("Let's see some friends");
+userSignal.set({
+  name: "Jane"
+});
 
-    userSignal.getTruthy(app, function(app, user) {
-      console.info("Nice to see you");
-    });
+userSignal.getTruthy(app, function(app, user) {
+  console.info("Nice to see you");
+});
 
-    userSignal.set({
-      name: "Joe"
-    });
+userSignal.set({
+  name: "Joe"
+});
 
-    userSignal.unset();
+userSignal.unset();
+```
 
 The console ouput is:
 
