@@ -10,17 +10,26 @@ A rich Signal & Slots (Reactive Programming) api on Backbone Models. It is compo
 // backbone-signal extends Backbone.Model
 var app = new Backbone.Model();
 
-var userSignal = app.signal("user");
-userSignal.getTruthy(app, function(app, user) {
-  console.info("Hello " + user.name);
+// The block is called with load when the value of the signal is null.
+var userSignal = app.signal("user").setLoader(function() {
+  userSignal.set({
+    name: "..."
+  });
 });
 
 console.info("Let's see some friends");
+
+// userSignal.value() is null so the loader is called
+userSignal.load().getTruthy(app, function(app, user) {
+  console.info("Hello " + user.name);
+});
+
 userSignal.set({
   name: "Jane"
 });
 
-userSignal.getTruthy(app, function(app, user) {
+// userSignal.value() is not null so the loader is not called
+userSignal.load().getTruthy(app, function(app, user) {
   console.info("Nice to see you");
 });
 
@@ -34,10 +43,13 @@ userSignal.unset();
 The console ouput is:
 
     Let's see some friends
+    Hello ...
     Hello Jane
     Nice to see you
     Hello Joe
     Nice to see you
+
+First, notice setLoader. The loader is called when load() if first called because userSignal.value() == null (== undefined as well). The second time load() is called, the loader is not called, since userSignal.value() is not == null.
 
 We are calling getTruthy on the userSignal two times, one for "Hello " + user.name and one for "Nice to see you". The callback is invoked when the value is [Truthy](http://www.sitepoint.com/javascript-truthy-falsy/). So when userSignal.unset is called, the callbacks are not invoked.
 
