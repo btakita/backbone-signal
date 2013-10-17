@@ -206,7 +206,7 @@
   }
   function bindFalsyOnce(signal, listener, cb) {
     return function getFalsyOnceCb(model, value) {
-      if (value) {
+      if (!value) {
         signal.unbind(listener, getFalsyOnceCb);
         cb.apply(signal, arguments);
       }
