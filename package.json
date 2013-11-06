@@ -4,7 +4,7 @@
   "url": "https://github.com/btakita/backbone-signal",
   "author": "Brian Takita <brian.takita@gmail.com>",
   "main": "backbone-signal.js",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -43,8 +43,6 @@
       if (this.unloader) {
         this.unloader.call(this, this.target);
       }
-      this.stopListening();
-      this.unset();
     },
     setUnloader: function(loader) {
       this.unloader = loader;
