@@ -75,26 +75,26 @@ backbone-signal is being used in [www.rundavoo.com](http://www.rundavoo.com) and
 ## Setters
 
 * set - Sets the value with the argument
-* unset - Unets the value
+* unset - Unsets the value
 * value - Returns the value
 
 ## Getters/Listeners
 
-* get - Invoke the callback immeditately and on any additional changes to the value
-* listen - Listen to any additional changes to the value (does not invoke the callback immeditately)
-* getOnce - Invoke the callback immeditately one time
+* get - Invoke the callback immediately and on any additional changes to the value
+* listen - Listen to any additional changes to the value (does not invoke the callback immediately)
+* getOnce - Invoke the callback immediately one time
 * listenOnce - Listen to any additional changes to the value one time
-* getTruthy - Invoke the callback immeditately and on any additional changes to the value if the value is truthy
+* getTruthy - Invoke the callback immediately and on any additional changes to the value if the value is truthy
 * listenTruthy - Listen to any additional changes to the value if the value is truthy
-* getTruthyOnce - Invoke the callback immeditately or on any additional changes to the value if the value is truthy one time only
+* getTruthyOnce - Invoke the callback immediately or on any additional changes to the value if the value is truthy one time only
 * listenTruthyOnce - Listen to any additional changes to the value if the value is truthy one time only
-* getFalsy- Invoke the callback immeditately and on any additional changes to the value if the value is falsy
+* getFalsy- Invoke the callback immediately and on any additional changes to the value if the value is falsy
 * listenFalsy - Listen to any additional changes to the value if the value is falsy
-* getFalsyOnce - Invoke the callback immeditately or on any additional changes to the value if the value is falsy one time only
+* getFalsyOnce - Invoke the callback immediately or on any additional changes to the value if the value is falsy one time only
 * listenFalsyOnce - Listen to any additional changes to the value if the value is falsy one time only
-* getDefined- Invoke the callback immeditately and on any additional changes to the value if the value is defined
+* getDefined- Invoke the callback immediately and on any additional changes to the value if the value is defined
 * listenDefined - Listen to any additional changes to the value if the value is defined
-* getDefinedOnce - Invoke the callback immeditately or on any additional changes to the value if the value is defined one time only
+* getDefinedOnce - Invoke the callback immediately or on any additional changes to the value if the value is defined one time only
 * listenDefinedOnce - Listen to any additional changes to the value if the value is defined one time only
 * unbind - Unbinds the given object from the callback
 * loading
